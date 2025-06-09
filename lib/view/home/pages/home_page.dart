@@ -1,5 +1,7 @@
 
+import 'package:crm/view/home/pages/Calling_page.dart';
 import 'package:crm/view/home/pages/mycampaign_page.dart';
+import 'package:crm/view/home/pages/notifications_page.dart';
 import 'package:flutter/material.dart';
 import 'package:crm/view/home/pages/drawer.dart';
 
@@ -11,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       drawer: NavbarSlider(),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor:  Color.fromRGBO(0, 0, 0, 0),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
@@ -19,19 +21,20 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-              // Handle notification tap
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationsPage()));
             },
           ),
           IconButton(
             icon: const Icon(Icons.call),
             onPressed: () {
-              // Handle call tap
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>CallingPage()));
             },
           ),
           const SizedBox(width: 10),
         ],
       ),
       extendBodyBehindAppBar: true, 
+
       body: Stack(
         children: [
           Container(
@@ -102,7 +105,7 @@ class HomePage extends StatelessWidget {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyCampaign()),
+                                  MaterialPageRoute(builder: (context) => MycampaignPage()),
                                 );
                               },
                               child: _buildDashboardCard('My Campaign', Icons.edit, Colors.orange,),
