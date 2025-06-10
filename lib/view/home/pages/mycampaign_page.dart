@@ -1,4 +1,5 @@
 
+import 'package:crm/view/home/pages/Calling_page.dart';
 import 'package:flutter/material.dart';
 import 'package:crm/view/home/pages/drawer.dart';
 
@@ -17,7 +18,9 @@ class MycampaignPage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(icon:  Icon(Icons.notifications), onPressed: () {}),
-          IconButton(icon:  Icon(Icons.call), onPressed: () {}),
+          IconButton(icon:  Icon(Icons.call), onPressed: () {
+             Navigator.push(context, MaterialPageRoute(builder: (context)=>CallingPage()));
+          }),
            SizedBox(width: 10),
         ],
       ),
