@@ -1,5 +1,6 @@
 
 import 'package:crm/view/home/pages/Calling_page.dart';
+import 'package:crm/view/home/pages/notifications_page.dart';
 import 'package:flutter/material.dart';
 import 'package:crm/view/home/pages/drawer.dart';
 
@@ -17,7 +18,9 @@ class MycampaignPage extends StatelessWidget {
         iconTheme:  IconThemeData(color: Colors.white),
         centerTitle: true,
         actions: [
-          IconButton(icon:  Icon(Icons.notifications), onPressed: () {}),
+          IconButton(icon:  Icon(Icons.notifications), onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationsPage()));
+          }),
           IconButton(icon:  Icon(Icons.call), onPressed: () {
              Navigator.push(context, MaterialPageRoute(builder: (context)=>CallingPage()));
           }),
@@ -158,6 +161,7 @@ class MycampaignPage extends StatelessWidget {
 
   Widget _buildCampaignCard() {
   return Container(
+    
     margin:  EdgeInsets.only(bottom: 20),
     padding:  EdgeInsets.all(12),
     decoration: BoxDecoration(
@@ -191,7 +195,6 @@ class MycampaignPage extends StatelessWidget {
         ),
          SizedBox(height: 12),
         GridView.count(
-          
           crossAxisCount: 2,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
