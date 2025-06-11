@@ -232,8 +232,10 @@
 
 
 import 'package:crm/view/home/pages/Calling_page.dart';
+import 'package:crm/view/home/pages/my_reports_page.dart';
 import 'package:crm/view/home/pages/mycampaign_page.dart';
 import 'package:crm/view/home/pages/notifications_page.dart';
+import 'package:crm/view/home/pages/walking_leads_form.dart';
 import 'package:flutter/material.dart';
 import 'package:crm/view/home/pages/drawer.dart';
 
@@ -393,7 +395,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         child: _buildDashboardCard('My Tasks', Icons.bar_chart, const Color(0xFF708090)),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyReportsPage()));
+                        },
                         child: _buildDashboardCard('My Reports', Icons.folder, const Color(0xFF6B7DB3)),
                       ),
                       GestureDetector(
@@ -456,11 +460,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               scale: _animation,
               child: FloatingActionButton(
                 heroTag: 'button1',
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0XFF175F8E),
                 onPressed: () {
                     print("Call button pressed");
                 },
-                child: const Icon(Icons.call, color: Colors.white),
+                child: const Icon(Icons.event_note_outlined, color: Colors.white),
               ),
             ),
             const SizedBox(height: 10),
@@ -468,27 +472,29 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               scale: _animation,
               child: FloatingActionButton(
                 heroTag: 'button2',
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0XFF175F8E),
                 onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WalkingLeadsForm()));
                    print("Email button pressed");
                 },
-                child: const Icon(Icons.email, color: Colors.white),
+                child: const Icon(Icons.edit_square, color: Colors.white),
               ),
             ),
             const SizedBox(height: 10),
           ],
-          FloatingActionButton(
-            heroTag: 'mainButton',
-            backgroundColor: const Color(0xFF175F8E),
-            shape: const CircleBorder(),
-            onPressed: _toggleAdditionalButtons,
-            child: AnimatedIcon(
-              icon: AnimatedIcons.menu_close,
-              progress: _animationController,
-              color: const Color.fromARGB(255, 245, 249, 251),
-              size: 30,
-            ),
-          ),
+
+             FloatingActionButton(
+             heroTag: 'mainButton',
+             backgroundColor: const Color(0xFF175F8E),
+             shape: const CircleBorder(),
+             onPressed: _toggleAdditionalButtons,
+             child: Icon(
+               _showAdditionalButtons ? Icons.close : Icons.add,
+               color: const Color.fromARGB(255, 245, 249, 251),
+               size: 30,
+             ),
+           ),
+
         ],
       ),
     );
