@@ -64,6 +64,7 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 
 class MyReportsPage extends StatefulWidget {
@@ -78,11 +79,12 @@ class _MyReportsPageState extends State<MyReportsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          // Gradient background
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -92,8 +94,6 @@ class _MyReportsPageState extends State<MyReportsPage> {
               ),
             ),
           ),
-
-          // Main content with AppBar and rounded card
           Positioned(
             top: 50,
             left: 9,
@@ -114,7 +114,6 @@ class _MyReportsPageState extends State<MyReportsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top section
                   const Text(
                     'My Reports',
                     style: TextStyle(
@@ -132,8 +131,6 @@ class _MyReportsPageState extends State<MyReportsPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-
-                  // Navigation Icons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -143,18 +140,15 @@ class _MyReportsPageState extends State<MyReportsPage> {
                       _buildNavIcon(Icons.message, 'Message Act Reports', 3),
                     ],
                   ),
-
                   const SizedBox(height: 20),
-
-                  // Dynamic report section
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          if (_selectedIndex == 0) _buildCallReports(),
-                          if (_selectedIndex == 1) _buildFollowUpReports(),
-                          if (_selectedIndex == 2) _buildActivityReports(),
-                          if (_selectedIndex == 3) _buildMessageReports(),
+                          if (_selectedIndex == 0) _buildCallReports(screenWidth),
+                          if (_selectedIndex == 1) _buildFollowUpReports(screenWidth),
+                          if (_selectedIndex == 2) _buildActivityReports(screenWidth),
+                          if (_selectedIndex == 3) _buildMessageReports(screenWidth),
                         ],
                       ),
                     ),
@@ -173,11 +167,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
     final primaryColor = const Color(0xFF175F8E);
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
+      onTap: () => setState(() => _selectedIndex = index),
       child: Column(
         children: [
           Container(
@@ -187,10 +177,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
               color: isSelected ? primaryColor : Colors.grey[100],
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
-              icon,
-              color: isSelected ? Colors.white : Colors.grey[600],
-            ),
+            child: Icon(icon, color: isSelected ? Colors.white : Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           SizedBox(
@@ -198,11 +185,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 10, color: Colors.grey[600], fontWeight: FontWeight.w500),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -212,89 +195,185 @@ class _MyReportsPageState extends State<MyReportsPage> {
     );
   }
 
-  Widget _buildCallReports() {
-    return _buildReportCard(
-      title: 'Call Reports',
-      data: {
-        'Total Calls Attempted': '400',
-        'Total Calls Connected': '352',
-        'Converted Leads': '40',
-        'Total Calls Time': '45 Min',
-        'Average Call Duration': '2 min',
-        'Average Start Call Time': '10:00 AM',
-      },
+  Widget _buildCallReports(double screenWidth) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: screenWidth * 0.97,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(255, 199, 65, 65).withOpacity(0.1),
+                blurRadius: 12,
+                spreadRadius: 1,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Login Report', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _infoChip('Time :', '4:00'),
+                  _infoChip('Activity :', 'Login'),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Description :  ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    Expanded(
+                      child: Text(
+                        'Late due to Stuck in traffic',
+                        style: TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        Container(
+          width: screenWidth * 0.97,
+          height: 180,
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _buildBar(10, 'Jan'),
+              _buildBar(100, 'Feb'),
+              _buildBar(80, 'Mar'),
+              _buildBar(60, 'Apr'),
+              _buildBar(60, 'may'),
+              _buildBar(50, 'jun'),
+              _buildBar(60, 'july'),
+              _buildBar(40, 'Aug'),
+              _buildBar(90, 'Sep'),
+              _buildBar(60, 'Oct'),
+              _buildBar(20, 'Nov'),
+              _buildBar(100, 'Dec'),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     const Icon(Icons.location_pin, color: Colors.blue, size: 20),
+              //     Container(height: 120, width: 20, color: Colors.blue),
+              //     const SizedBox(height: 4),
+              //     const Text('May', style: TextStyle(fontSize: 12)),
+              //   ],
+              // ),
+              // _buildBar(90, 'Jun'),
+              // _buildBar(65, 'Jul'),
+            ],
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: Center(
+            child: Text('85% Total month call records',
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+          ),
+        ),
+        _buildReportCard(title: 'Call Reports', data: {
+          'Total Calls Attempted': '400',
+          'Total Calls Connected': '352',
+          'Converted Leads': '40',
+          'Total Calls Time': '45 Min',
+          'Average Call Duration': '2 min',
+          'Average Start Call Time': '10:00 AM',
+        }, screenWidth: screenWidth),
+      ],
     );
   }
 
-  Widget _buildFollowUpReports() {
-    return _buildReportCard(
-      title: 'Follow-up Reports',
-      data: {
-        'Total Follow-ups': '120',
-        'Completed': '98',
-        'Pending': '22',
-      },
+  Widget _buildBar(double height, String label) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(height: height, width: 20, color: Colors.grey[400]),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(fontSize: 12)),
+      ],
     );
   }
 
-  Widget _buildActivityReports() {
-    return _buildReportCard(
-      title: 'Activity Reports',
-      data: {
-        'Total Activities': '50',
-        'Meetings Scheduled': '15',
-        'Tasks Done': '35',
-      },
-    );
-  }
-
-  Widget _buildMessageReports() {
-    return _buildReportCard(
-      title: 'Message Activity Reports',
-      data: {
-        'Messages Sent': '300',
-        'Messages Delivered': '280',
-        'Replies Received': '75',
-      },
-    );
-  }
-
-  Widget _buildReportCard({required String title, required Map<String, String> data}) {
+  Widget _infoChip(String label, String value) {
     return Container(
-      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Text('$label $value',
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+    );
+  }
+
+  Widget _buildFollowUpReports(double screenWidth) => _buildReportCard(title: 'Follow-up Reports', data: {
+    'Total Follow-ups': '120',
+    'Completed': '98',
+    'Pending': '22',
+  }, screenWidth: screenWidth);
+
+  Widget _buildActivityReports(double screenWidth) => _buildReportCard(title: 'Activity Reports', data: {
+    'Total Activities': '50',
+    'Meetings Scheduled': '15',
+    'Tasks Done': '35',
+  }, screenWidth: screenWidth);
+
+  Widget _buildMessageReports(double screenWidth) => _buildReportCard(title: 'Message Activity Reports', data: {
+    'Messages Sent': '300',
+    'Messages Delivered': '280',
+    'Replies Received': '75',
+  }, screenWidth: screenWidth);
+
+  Widget _buildReportCard({required String title, required Map<String, String> data, required double screenWidth}) {
+    return Container(
+      width: screenWidth * 0.97,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 4),
-        ],
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              )),
+          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ...data.entries.map((entry) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(entry.key,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[800],
-                        )),
+                    Text(entry.key, style: TextStyle(fontSize: 14, color: Colors.grey[800])),
                     Text(entry.value,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        )),
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                   ],
                 ),
               )),
@@ -304,266 +383,3 @@ class _MyReportsPageState extends State<MyReportsPage> {
   }
 }
 
-
-
-// import 'package:flutter/material.dart';
-
-// class MyReportsPage extends StatelessWidget {
-//   const MyReportsPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       extendBodyBehindAppBar: true,
-//       backgroundColor: Colors.transparent,
-     
-//       body: Stack(
-//         children: [
-//           // Gradient Background
-//           Container(
-//             decoration: const BoxDecoration(
-//               gradient: LinearGradient(
-//                 colors: [Color(0xFF175F8E), Color(0xFF4BB0D0)],
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//               ),
-//             ),
-//           ),
-
-//           // White Rounded Container
-//           Positioned(
-//             top: 50,
-//             left: 8,
-//             right: 8,
-//             bottom: 0,
-//             child: Container(
-//               padding: const EdgeInsets.symmetric(horizontal: 16),
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(25),
-//                 boxShadow: const [
-//                   BoxShadow(color: Colors.black12, blurRadius: 8),
-//                 ],
-//               ),
-//               child: SingleChildScrollView(
-//                 padding: const EdgeInsets.only(top: 20, bottom: 20),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-
-//                     // ==== HEADER CARD ====
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.all(20),
-//                       decoration: _cardDecoration(),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           const Text(
-//                             'My Reports',
-//                             style: TextStyle(
-//                               fontSize: 24,
-//                               fontWeight: FontWeight.bold,
-//                               color: Colors.black87,
-//                             ),
-//                           ),
-//                           const SizedBox(height: 8),
-//                           Text(
-//                             'We are here to connect with you. Connect us freely.',
-//                             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-//                           ),
-//                           const SizedBox(height: 20),
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                             children: [
-//                               _buildNavIcon(Icons.phone, 'Call Reports', const Color(0xFF1E3A8A)),
-//                               _buildNavIcon(Icons.follow_the_signs, 'Follow-up Reports', Colors.grey[700]!),
-//                               _buildNavIcon(Icons.trending_up, 'Activity Reports', Colors.grey[700]!),
-//                               _buildNavIcon(Icons.message, 'Message Act Reports', Colors.grey[700]!),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 16),
-
-//                     // ==== LOGIN REPORT ====
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.all(16),
-//                       decoration: _cardDecoration(),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           const Text(
-//                             'Login Report',
-//                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
-//                           ),
-//                           const SizedBox(height: 12),
-//                           Row(
-//                             children: [
-//                               Expanded(
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Text('Time : 4:00', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-//                                     const SizedBox(height: 8),
-//                                     Text('Description :', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-//                                     const Text('Late due to Stuck in traffic', style: TextStyle(fontSize: 14, color: Colors.black87)),
-//                                   ],
-//                                 ),
-//                               ),
-//                               Text('Activity : Login', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 16),
-
-//                     // ==== CHART ====
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.all(16),
-//                       decoration: _cardDecoration(),
-//                       child: Column(
-//                         children: [
-//                           Row(
-//                             children: [
-//                               Container(
-//                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-//                                 decoration: BoxDecoration(
-//                                   color: const Color(0xFF3B82F6),
-//                                   borderRadius: BorderRadius.circular(12),
-//                                 ),
-//                                 child: Row(
-//                                   children: [
-//                                     Container(width: 8, height: 8, decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle)),
-//                                     const SizedBox(width: 4),
-//                                     const Text('200 Calls', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
-//                                   ],
-//                                 ),
-//                               ),
-//                               const Spacer(),
-//                               Text('Average Call 12m', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-//                             ],
-//                           ),
-//                           const SizedBox(height: 20),
-//                           SizedBox(
-//                             height: 200,
-//                             child: Row(
-//                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                               crossAxisAlignment: CrossAxisAlignment.end,
-//                               children: [
-//                                 _buildBarChart('Jan', 80, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('Feb', 120, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('Mar', 100, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('Apr', 160, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('May', 140, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('Jun', 130, const Color(0xFF3B82F6)),
-//                                 _buildBarChart('Jul', 110, const Color(0xFF3B82F6)),
-//                               ],
-//                             ),
-//                           ),
-//                           const SizedBox(height: 16),
-//                           Text('85% Total month call records', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey[700])),
-//                         ],
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 16),
-
-//                     // ==== CALL REPORT ====
-//                     Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.all(16),
-//                       decoration: _cardDecoration(),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           const Text('Call Reports', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87)),
-//                           const SizedBox(height: 16),
-//                           _buildStatRow('Total Calls Attempted', '400'),
-//                           _buildStatRow('Total Calls Connected', '352'),
-//                           _buildStatRow('Converted Leads', '40'),
-//                           _buildStatRow('Total Calls Time', '45 Min'),
-//                           _buildStatRow('Average Call Duration', '2 min'),
-//                           _buildStatRow('Average Start Call Time', '10:00 AM'),
-//                         ],
-//                       ),
-//                     ),
-
-//                     const SizedBox(height: 20),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   BoxDecoration _cardDecoration() {
-//     return BoxDecoration(
-//       color: Colors.white,
-//       borderRadius: BorderRadius.circular(12),
-//       boxShadow: [
-//         BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 6, offset: const Offset(0, 2)),
-//       ],
-//     );
-//   }
-
-//   Widget _buildNavIcon(IconData icon, String label, Color color) {
-//     return Column(
-//       children: [
-//         Container(
-//           width: 50,
-//           height: 50,
-//           decoration: BoxDecoration(
-//             color: color == const Color(0xFF1E3A8A) ? color : Colors.grey[100],
-//             borderRadius: BorderRadius.circular(12),
-//           ),
-//           child: Icon(icon, color: color == const Color(0xFF1E3A8A) ? Colors.white : Colors.grey[600], size: 24),
-//         ),
-//         const SizedBox(height: 8),
-//         SizedBox(
-//           width: 60,
-//           child: Text(
-//             label,
-//             textAlign: TextAlign.center,
-//             style: TextStyle(fontSize: 10, color: Colors.grey[600], fontWeight: FontWeight.w500),
-//             maxLines: 2,
-//             overflow: TextOverflow.ellipsis,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildBarChart(String month, double height, Color color) {
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: [
-//         Container(width: 25, height: height, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)))),
-//         const SizedBox(height: 8),
-//         Text(month, style: TextStyle(fontSize: 12, color: Colors.grey[600], fontWeight: FontWeight.w500)),
-//       ],
-//     );
-//   }
-
-//   Widget _buildStatRow(String label, String value) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 8),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[700])),
-//           Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87)),
-//         ],
-//       ),
-//     );
-//   }
-// }
