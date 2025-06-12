@@ -287,6 +287,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
         _buildBar(60, 'Oct'),
         const SizedBox(width: 12),
         _buildBar(20, 'Nov'),
+
         const SizedBox(width: 12),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -325,7 +326,7 @@ class _MyReportsPageState extends State<MyReportsPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(height: height, width: 20, color: Colors.grey[400]),
+        Container(height: height, width: 20, color: Colors.blue),
         const SizedBox(height: 4),
         Text(label, style: const TextStyle(fontSize: 12)),
       ],
