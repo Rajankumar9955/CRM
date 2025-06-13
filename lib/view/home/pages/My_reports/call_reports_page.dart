@@ -181,7 +181,9 @@ class CallReportsPage extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Center(
+          child: Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+          ),
         const SizedBox(height: 12),
 
         ...List.generate(entries.length, (index) {
@@ -192,11 +194,11 @@ class CallReportsPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(entry.key, style: TextStyle(fontSize: 14, color: Colors.grey[800])),
-                  Text(entry.value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                  Text(entry.value, style:  TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                 ],
               ),
               if (index != entries.length - 1) // avoid divider after the last item
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Divider(color: Colors.grey, height: 1),
                 ),
