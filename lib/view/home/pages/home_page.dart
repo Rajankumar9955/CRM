@@ -2,6 +2,7 @@ import 'package:crm/view/home/pages/Calling_page.dart';
 import 'package:crm/view/home/pages/my_reports_page.dart';
 import 'package:crm/view/home/pages/mycampaign_page.dart';
 import 'package:crm/view/home/pages/notifications_page.dart';
+import 'package:crm/view/home/pages/walking_leads_page.dart';
 import 'package:crm/view/home/pages/walking_leads_form.dart';
 import 'package:flutter/material.dart';
 import 'package:crm/view/home/pages/drawer.dart';
@@ -170,7 +171,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         child: _buildDashboardCard('My Reports', Icons.folder, const Color(0xFF6B7DB3)),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>WalkingLeadsPage()));
+                        },
                         child: _buildDashboardCard('Walking Leads', Icons.directions_walk, const Color(0xFF87CEEB)),
                       ),
                     ],
