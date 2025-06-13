@@ -9,7 +9,7 @@ class CallReportsPage extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding:  EdgeInsets.only(top: 2, left: 12, right: 12),
+        padding:  EdgeInsets.only(top: 10, left: 12, right: 12),
         child: SingleChildScrollView(
           child: Column(
             children: [

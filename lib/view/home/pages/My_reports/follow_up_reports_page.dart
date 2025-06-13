@@ -10,15 +10,14 @@ class FollowUpReportsPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          physics:  BouncingScrollPhysics(),
-          padding:  EdgeInsets.only(top: 12, left: 12, right: 12, bottom: 20),
+          padding:  EdgeInsets.only(top: 10, left: 12, right: 12, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLoginReport(screenWidth),
               const SizedBox(height: 30),
               _buildReportCard(
-                title: 'Call Reports',
+                title: 'Follow-up Reports',
                 data: {
                   'Follow-up Due Today': '400',
                   'Avg. Turn Around Time': '3:52 PM',
